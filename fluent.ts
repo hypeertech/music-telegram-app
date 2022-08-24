@@ -1,17 +1,17 @@
 import { Fluent, useFluent } from "./deps.ts";
-// import { BotContext } from "./context.ts";
+import { BotContext } from "./context.ts";
 
 const fluent = new Fluent();
 
 export const fluentMiddleware = useFluent({
   fluent,
-  // localeNegotiator: (ctx: BotContext) => {
-  //   if (!ctx.session.locale) {
-  //     return ctx.session.locale = ctx.from?.language_code || "en";
-  //   }
-  //
-  //   return ctx.session.locale;
-  // },
+  localeNegotiator: (ctx: BotContext) => {
+    if (!ctx.session.locale) {
+      return ctx.session.locale = ctx.from?.language_code || "en";
+    }
+
+    return ctx.session.locale;
+  },
 });
 
 export const setup = async () => {

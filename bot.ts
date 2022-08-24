@@ -1,15 +1,17 @@
 import { Bot } from "./deps.ts";
 import { BotContext } from "./context.ts";
+import { sessionMiddleware } from "./session.ts";
 import { fluentMiddleware, setup as setupFluent } from "./fluent.ts";
 import { TOKEN } from "./config.ts";
 
 const bot = new Bot<BotContext>(TOKEN);
 
+bot.use(sessionMiddleware);
 bot.use(fluentMiddleware);
 
 bot.on("message:text", async (ctx) => {
   if (ctx.message.text === "Ping!") {
-    await ctx.reply("Pong!");
+    await ctx.reply(ctx.t("pong"));
   }
 });
 
